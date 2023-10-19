@@ -3,17 +3,25 @@ version: '3'
 services:
 ###> doctrine/doctrine-bundle ###
   database:
+    container_name: champimap_db
     image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_DB: champimap
       # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: champimap
+      POSTGRES_USER: champimap
     volumes:
       - database_data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
+    ports:
+      - 5432:5432
 ###< doctrine/doctrine-bundle ###
+###> symfony/mailer ###
+#  mailer:
+#    image: schickling/mailcatcher
+#    ports: ["1025", "1080"]
+###< symfony/mailer ###
 
 volumes:
 ###> doctrine/doctrine-bundle ###
