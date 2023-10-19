@@ -8,3 +8,6 @@ db:
 
 stan:
 	vendor/bin/phpstan analyse src tests
+
+watch:
+	yarn watch
