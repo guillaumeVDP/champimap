@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Finding{% endblock %}
+
+{% block body %}
+    <h1>Create new Finding</h1>
+
+    {{ include('finding/_form.html.twig') }}
+
+    <a href="{{ path('app_finding_index') }}">back to list</a>
+{% endblock %}

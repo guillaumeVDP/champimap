@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finding index{% endblock %}
+
+{% block body %}
+    <h1>Finding index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Datetime</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for finding in findings %}
+            <tr>
+                <td>{{ finding.id }}</td>
+                <td>{{ finding.quantity }}</td>
+                <td>{{ finding.datetime ? finding.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_finding_show', {'id': finding.id}) }}">show</a>
+                    <a href="{{ path('app_finding_edit', {'id': finding.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_finding_new') }}">Create new</a>
+{% endblock %}

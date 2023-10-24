@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finding{% endblock %}
+
+{% block body %}
+    <h1>Finding</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ finding.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ finding.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Datetime</th>
+                <td>{{ finding.datetime ? finding.datetime|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_finding_index') }}">back to list</a>
+
+    <a href="{{ path('app_finding_edit', {'id': finding.id}) }}">edit</a>
+
+    {{ include('finding/_delete_form.html.twig') }}
+{% endblock %}
