@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue sur ChampiMap</h1>
+    <div {{ stimulus_controller('map') }}>
+        <div id="map"></div>
+    </div>
+    <div {{ stimulus_controller('modal-form', {
+        formUrl: path('app_finding_new')
+    }) }}>
+        <button class="btn btn-primary btn-sm" {{ stimulus_action('modal-form', 'openModal') }}>Trouvé</button>
+        {{ include('_modal.html.twig', {modalTitle: "Ajouter une trouvaille"}) }}
+    </div>
+{% endblock %}
