@@ -24,7 +24,11 @@ class FindingType extends AbstractType
                 ]
             )
             ->add('quantity', NumberType::class, ['data' => 1])
-            ->add('datetime', DateTimeType::class, ['data' => new \DateTime()])
+            ->add('datetime', DateTimeType::class, [
+                    'data' => new \DateTimeImmutable(),
+                    'input' => 'datetime_immutable',
+                ]
+            )
             ->add('location', LocationType::class, [
                 'required' => false,
                 'label' => 'Localisation',

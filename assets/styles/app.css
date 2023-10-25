@@ -1,5 +1,9 @@
 body {
-    background-color: #3b82f6;
+    background-color: #bfd1ec;
+}
+
+.main-container {
+    padding: 1em 4em;
 }
 
 #map {

@@ -16,7 +16,7 @@ class Finding
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\ManyToOne(targetEntity: Location::class, cascade: ["persist", "remove"])]
     private Location $location;
 
     #[ORM\ManyToOne(targetEntity: Mushroom::class)]

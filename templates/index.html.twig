@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Bienvenue sur ChampiMap</h1>
-    <div {{ stimulus_controller('map') }}>
-        <div id="map"></div>
-    </div>
     <div {{ stimulus_controller('modal-form', {
         formUrl: path('app_finding_new')
     }) }}>
+        <div {{ stimulus_controller('map', {
+            findings: findings|serialize(format = 'json')
+        }) }} data-action="map:addMushroom->modal-form#openModal">
+            <div id="map"></div>
+        </div>
         <button class="btn btn-primary btn-sm" {{ stimulus_action('modal-form', 'openModal') }}>Trouvé</button>
         {{ include('_modal.html.twig', {modalTitle: "Ajouter une trouvaille"}) }}
     </div>
