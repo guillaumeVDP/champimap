@@ -3,7 +3,14 @@ import {Controller} from '@hotwired/stimulus';
 export default class extends Controller {
     static values = {
         findings: Array,
+        landmarks: Array,
     }
+
+    ADD_MUSHROOM_TAG = "add_mushroom";
+    SHOW_MUSHROOM_TAG = "show_mushroom";
+    ADD_LANDMARK_TAG = "add_landmark";
+    SHOW_LANDMARK_TAG = "show_landmark";
+
     popup = L.popup();
     latlng = null;
 
@@ -35,14 +42,30 @@ export default class extends Controller {
         });
 
         this.findingsValue.forEach((finding) => {
-            L.marker([finding.location.latitude, finding.location.longitude]).addTo(map);
+            let latlng = [finding.location.latitude, finding.location.longitude];
+            L.marker(latlng)
+                .addTo(map)
+                .on('click', this.dispatchFct.bind(this, this.SHOW_MUSHROOM_TAG, finding.id))
+        });
+
+        this.landmarksValue.forEach((landmark) => {
+            let latlng = [landmark.location.latitude, landmark.location.longitude];
+            L.marker(latlng)
+                .addTo(map)
+                .on('click', this.dispatchFct.bind(this, this.SHOW_LANDMARK_TAG, landmark.id))
         });
 
         // Popup init
         let newMushroomBtn = document.createElement('button');
         newMushroomBtn.innerHTML = "🍄";
-        newMushroomBtn.addEventListener("click", this.dispatchFct.bind(this));
-        this.popup.setContent(newMushroomBtn);
+        newMushroomBtn.addEventListener('click', this.dispatchFct.bind(this, this.ADD_MUSHROOM_TAG));
+        let newLandmarkBtn = document.createElement('button');
+        newLandmarkBtn.innerHTML = "📍";
+        newLandmarkBtn.addEventListener('click', this.dispatchFct.bind(this, this.ADD_LANDMARK_TAG));
+        let container = document.createElement('div');
+        container.appendChild(newMushroomBtn);
+        container.appendChild(newLandmarkBtn);
+        this.popup.setContent(container);
     }
 
     onMapClick(event) {
@@ -50,8 +73,14 @@ export default class extends Controller {
         this.latlng = event.latlng;
     }
 
-    dispatchFct() {
-        this.dispatch("addMushroom", {detail: {latlng: this.latlng}})
+    dispatchFct(type, id) {
+        this.dispatch('openModal', {
+            detail: {
+                type: type,
+                latlng: this.latlng,
+                id: id
+            }
+        });
         this.popup.close();
     }
 

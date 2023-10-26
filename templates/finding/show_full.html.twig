@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finding{% endblock %}
+
+{% block body %}
+    <h1>Finding</h1>
+
+    {{ include('finding/show.html.twig') }}
+
+    <a href="{{ path('app_finding_index') }}">back to list</a>
+
+    <a href="{{ path('app_finding_edit', {'id': finding.id}) }}">edit</a>
+
+    {{ include('finding/_delete_form.html.twig') }}
+{% endblock %}

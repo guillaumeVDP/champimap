@@ -7,12 +7,12 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Quantity</th>
-                <th>Datetime</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Quantity</th>
+            <th>Datetime</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for finding in findings %}
@@ -21,7 +21,7 @@
                 <td>{{ finding.quantity }}</td>
                 <td>{{ finding.datetime ? finding.datetime|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_finding_show', {'id': finding.id}) }}">show</a>
+                    <a href="{{ path('app_finding_show_full', {'id': finding.id}) }}">show</a>
                     <a href="{{ path('app_finding_edit', {'id': finding.id}) }}">edit</a>
                 </td>
             </tr>

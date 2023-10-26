@@ -19,7 +19,7 @@ class Landmark
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\ManyToOne(targetEntity: Location::class, cascade: ["persist", "remove"])]
     private Location $location;
 
     public function getId(): ?int

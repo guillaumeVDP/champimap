@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Landmark{% endblock %}
+
+{% block body %}
+    <h1>Finding</h1>
+
+    {{ include('landmark/show.html.twig') }}
+
+    <a href="{{ path('app_landmark_index') }}">back to list</a>
+
+    <a href="{{ path('app_landmark_edit', {'id': landmark.id}) }}">edit</a>
+
+    {{ include('landmark/_delete_form.html.twig') }}
+{% endblock %}

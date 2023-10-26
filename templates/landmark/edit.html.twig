@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Landmark{% endblock %}
+
+{% block body %}
+    <h1>Edit Landmark</h1>
+
+    {{ include('landmark/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_landmark_index') }}">back to list</a>
+
+    {{ include('landmark/_delete_form.html.twig') }}
+{% endblock %}

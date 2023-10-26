@@ -47,8 +47,16 @@ class FindingController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_finding_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_finding_show_full', methods: ['GET'])]
     public function show(Finding $finding): Response
+    {
+        return $this->render('finding/show_full.html.twig', [
+            'finding' => $finding,
+        ]);
+    }
+
+    #[Route('/simple/{id}', name: 'app_finding_show', methods: ['GET'])]
+    public function showSimple(Finding $finding): Response
     {
         return $this->render('finding/show.html.twig', [
             'finding' => $finding,
