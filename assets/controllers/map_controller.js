@@ -28,9 +28,20 @@ export default class extends Controller {
 
         // Markers init
         const iconRetinaUrl = 'images/marker-icon-2x.png';
-        const iconUrl = 'images/marker-icon2.png';
         const shadowUrl = 'images/marker-shadow.png';
-        L.Marker.prototype.options.icon = L.icon({
+        let iconUrl = 'images/marker-icon2.png';
+        let iconMushroom = L.icon({
+            iconRetinaUrl,
+            iconUrl,
+            shadowUrl,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41]
+        });
+        iconUrl = 'images/marker-icon-landmark.png';
+        let iconLandmark = L.icon({
             iconRetinaUrl,
             iconUrl,
             shadowUrl,
@@ -45,6 +56,7 @@ export default class extends Controller {
             let latlng = [finding.location.latitude, finding.location.longitude];
             L.marker(latlng)
                 .addTo(map)
+                .setIcon(iconMushroom)
                 .on('click', this.dispatchFct.bind(this, this.SHOW_MUSHROOM_TAG, finding.id))
         });
 
@@ -52,6 +64,7 @@ export default class extends Controller {
             let latlng = [landmark.location.latitude, landmark.location.longitude];
             L.marker(latlng)
                 .addTo(map)
+                .setIcon(iconLandmark)
                 .on('click', this.dispatchFct.bind(this, this.SHOW_LANDMARK_TAG, landmark.id))
         });
 
