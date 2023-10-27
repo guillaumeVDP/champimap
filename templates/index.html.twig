@@ -16,6 +16,8 @@
             <div id="map"></div>
 
         </div>
-        {{ include('_modal.html.twig', {modalTitle: "Ajouter une trouvaille"}) }}
+        <turbo-frame id="the_frame_id">
+            {{ include('_modal.html.twig', {modalTitle: "Ajouter une trouvaille"}) }}
+        </turbo-frame>
     </div>
 {% endblock %}

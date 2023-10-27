@@ -26,10 +26,7 @@ class FindingController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $finding = new Finding();
-        $form = $this->createForm(FindingType::class, $finding, [
-            'action' => $this->generateUrl('app_finding_new'),
-            'method' => 'POST',
-        ]);
+        $form = $this->createForm(FindingType::class, $finding);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,9 +36,7 @@ class FindingController extends AbstractController
             return $this->redirectToRoute('app_finding_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $template = $request->isXmlHttpRequest() ? '_form.html.twig' : 'new.html.twig';
-
-        return $this->render('finding/' . $template, [
+        return $this->render('finding/new.html.twig', [
             'finding' => $finding,
             'form' => $form,
         ]);
@@ -53,21 +48,20 @@ class FindingController extends AbstractController
         $finding = new Finding();
         $form = $this->createForm(FindingType::class, $finding, [
             'action' => $this->generateUrl('app_finding_new_turbo'),
-            'method' => 'POST',
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($finding);
             $entityManager->flush();
-        }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+            return $this->redirectToRoute('home');
+        }
 
         return $this->render('finding/_form.html.twig', [
             'finding' => $finding,
             'form' => $form,
-        ], $response);
+        ]);
     }
 
     #[Route('/{id}', name: 'app_finding_show_full', methods: ['GET'])]

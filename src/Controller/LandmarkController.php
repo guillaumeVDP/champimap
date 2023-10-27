@@ -26,10 +26,7 @@ class LandmarkController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $landmark = new Landmark();
-        $form = $this->createForm(LandmarkType::class, $landmark, [
-            'action' => $this->generateUrl('app_landmark_new'),
-            'method' => 'POST',
-        ]);
+        $form = $this->createForm(LandmarkType::class, $landmark);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,9 +36,30 @@ class LandmarkController extends AbstractController
             return $this->redirectToRoute('app_landmark_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $template = $request->isXmlHttpRequest() ? '_form.html.twig' : 'new.html.twig';
+        return $this->render('landmark/new.html.twig', [
+            'landmark' => $landmark,
+            'form' => $form,
+        ]);
+    }
 
-        return $this->render('landmark/' . $template, [
+    #[Route('/new-turbo', name: 'app_landmark_new_turbo', methods: ['GET', 'POST'])]
+    public function newTurbo(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $landmark = new Landmark();
+        $form = $this->createForm(LandmarkType::class, $landmark, [
+            'action' => $this->generateUrl('app_landmark_new_turbo'),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($landmark);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('landmark/_form.html.twig', [
             'landmark' => $landmark,
             'form' => $form,
         ]);
