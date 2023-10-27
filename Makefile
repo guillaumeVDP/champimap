@@ -6,7 +6,7 @@ start:
 db:
 	docker-compose up
 
-stan:
+test:
 	vendor/bin/phpstan analyse src tests
 
 watch:
