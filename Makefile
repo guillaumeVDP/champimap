@@ -1,7 +1,7 @@
 .PHONY: start
 
 start:
-	symfony serve:start
+	symfony serve:start --port=8888
 
 db:
 	docker-compose up

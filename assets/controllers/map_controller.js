@@ -34,8 +34,7 @@ export default class extends Controller {
          **** Markers init ****
          **********************/
         // User
-        // TODO: fallback when user don't give pos, set map center to Valière [43.5495051, 2.7590491]
-        navigator.geolocation.getCurrentPosition(this.showUserLocation.bind(this));
+        navigator.geolocation.getCurrentPosition(this.showUserLocation.bind(this), this.noUserLocation.bind(this));
 
         // Findings
         const iconRetinaUrl = 'images/marker-icon-2x.png';
@@ -112,10 +111,13 @@ export default class extends Controller {
         });
         this.userMarker = L.marker([position.coords.latitude, position.coords.longitude]);
         this.userMarker.setIcon(iconUser).addTo(this.map);
-        console.log("Pan to user");
-        console.log(this.map);
         this.map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 20);
         navigator.geolocation.watchPosition(this.trackUser.bind(this));
+    }
+
+    noUserLocation(positionError) {
+        const valierePosition = [43.5495051, 2.7590491];
+        this.map.setView(valierePosition, 20);
     }
 
     trackUser(position) {
