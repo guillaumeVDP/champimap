@@ -20,26 +20,29 @@ export default class extends Controller {
         /********************
          ***** Map init *****
          ********************/
-        this.map = L.map('map', {
-            // center: [43.5495051, 2.7590491],
-            // zoom: 20
-        });
+        this.map = L.map('map', {});
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
         this.map.on('click', this.onMapClick.bind(this));
+        document.getElementById("map").style.width = window.innerWidth + "px";
+        document.getElementById("map").style.height = window.innerHeight + "px";
 
         /**********************
          **** Markers init ****
          **********************/
         // User
-        navigator.geolocation.getCurrentPosition(this.showUserLocation.bind(this), this.noUserLocation.bind(this));
+        navigator.geolocation.getCurrentPosition(this.showUserLocation.bind(this), this.noUserLocation.bind(this), {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+        });
 
         // Findings
-        const iconRetinaUrl = 'images/marker-icon-2x.png';
         const shadowUrl = 'images/marker-shadow.png';
-        let iconUrl = 'images/marker-icon2.png';
+        let iconUrl = 'images/marker-icon-mushroom.png';
+        let iconRetinaUrl = 'images/marker-icon-mushroom-2x.png';
         let iconMushroom = L.icon({
             iconRetinaUrl,
             iconUrl,
@@ -61,6 +64,7 @@ export default class extends Controller {
 
         // Landmarks
         iconUrl = 'images/marker-icon-landmark.png';
+        iconRetinaUrl = 'images/marker-icon-landmark-2x.png';
         let iconLandmark = L.icon({
             iconRetinaUrl,
             iconUrl,
@@ -84,9 +88,11 @@ export default class extends Controller {
          **** popup init ****
          ********************/
         let newMushroomBtn = document.createElement('button');
+        newMushroomBtn.className = "btn-add-popup";
         newMushroomBtn.innerHTML = "🍄";
         newMushroomBtn.addEventListener('click', this.dispatchFct.bind(this, this.ADD_MUSHROOM_TAG));
         let newLandmarkBtn = document.createElement('button');
+        newLandmarkBtn.className = "btn-add-popup";
         newLandmarkBtn.innerHTML = "📍";
         newLandmarkBtn.addEventListener('click', this.dispatchFct.bind(this, this.ADD_LANDMARK_TAG));
         let container = document.createElement('div');
@@ -96,9 +102,9 @@ export default class extends Controller {
     }
 
     showUserLocation(position) {
-        const iconRetinaUrl = 'images/marker-icon-2x.png';
         const shadowUrl = 'images/marker-shadow.png';
         let iconUrl = 'images/marker-icon.png';
+        let iconRetinaUrl = 'images/marker-icon-2x.png';
         let iconUser = L.icon({
             iconRetinaUrl,
             iconUrl,
@@ -112,10 +118,16 @@ export default class extends Controller {
         this.userMarker = L.marker([position.coords.latitude, position.coords.longitude]);
         this.userMarker.setIcon(iconUser).addTo(this.map);
         this.map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 20);
-        navigator.geolocation.watchPosition(this.trackUser.bind(this));
+        
+        navigator.geolocation.watchPosition(this.trackUser.bind(this), this.errorOnPosition.bind(this), {
+            enableHighAccuracy: true,
+            timeout: 3000,
+            maximumAge: 0,
+        });
     }
 
     noUserLocation(positionError) {
+        console.warn(`ERROR (${positionError.code}): ${positionError.message}`);
         const valierePosition = [43.5495051, 2.7590491];
         this.map.setView(valierePosition, 20);
     }
@@ -123,6 +135,11 @@ export default class extends Controller {
     trackUser(position) {
         console.log("User position updated");
         this.userMarker.setLatLng([position.coords.latitude, position.coords.longitude]);
+        // this.map.panTo([position.coords.latitude, position.coords.longitude]);
+    }
+
+    errorOnPosition(positionError) {
+        console.warn(`ERROR (${positionError.code}): ${positionError.message}`);
     }
 
     onMapClick(event) {

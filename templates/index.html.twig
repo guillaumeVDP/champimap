@@ -2,7 +2,7 @@
 
 {% block body %}
     <div {{ stimulus_controller('modal-form', {
-        formUrlAddMushroom: path('app_finding_new'),
+        formUrlAddMushroom: path('app_finding_new_turbo'),
         formUrlShowMushroom: path('app_finding_show', {"id": 1}),
         formUrlAddLandmark: path('app_landmark_new'),
         formUrlShowLandmark: path('app_landmark_show', {"id": 1})
@@ -16,9 +16,6 @@
             <div id="map"></div>
 
         </div>
-
-        {#        <button class="btn btn-primary btn-sm" {{ stimulus_action('modal-form', 'openModal') }}>Trouvé</button> #}
-
         {{ include('_modal.html.twig', {modalTitle: "Ajouter une trouvaille"}) }}
     </div>
 {% endblock %}

@@ -71,7 +71,7 @@ class MushroomController extends AbstractController
     #[Route('/{id}', name: 'app_mushroom_delete', methods: ['POST'])]
     public function delete(Request $request, Mushroom $mushroom, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$mushroom->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $mushroom->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mushroom);
             $entityManager->flush();
         }

@@ -28,7 +28,8 @@ export default class extends Controller {
                 });
                 break;
             case "show_mushroom":
-                this.url = this.formUrlShowMushroomValue;
+                console.log(this.formUrlShowMushroomValue);
+                url = this.formUrlShowMushroomValue;
                 url = url.slice(0, -1) + id;
                 modalBody.innerHTML = await $.ajax(url);
                 break;

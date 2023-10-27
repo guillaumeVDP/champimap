@@ -2,13 +2,21 @@ body {
     background-color: #bfd1ec;
 }
 
-.main-container {
-    padding: 1em 4em;
+#home-btn {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    z-index: 10000000;
+    background-color: burlywood;
+    border-radius: 20px;
+    padding: 10px;
 }
 
-#map {
-    height: 600px;
-    width: 600px;
+.btn-add-popup {
+    margin: 10px;
+    padding: 10px;
+    font-size: 2em;
+    border-radius: 0.5em;
 }
 
 .modal-body button {

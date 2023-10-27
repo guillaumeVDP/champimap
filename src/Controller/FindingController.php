@@ -47,6 +47,29 @@ class FindingController extends AbstractController
         ]);
     }
 
+    #[Route('/new-turbo', name: 'app_finding_new_turbo', methods: ['GET', 'POST'])]
+    public function newTurbo(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $finding = new Finding();
+        $form = $this->createForm(FindingType::class, $finding, [
+            'action' => $this->generateUrl('app_finding_new_turbo'),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($finding);
+            $entityManager->flush();
+        }
+
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
+        return $this->render('finding/_form.html.twig', [
+            'finding' => $finding,
+            'form' => $form,
+        ], $response);
+    }
+
     #[Route('/{id}', name: 'app_finding_show_full', methods: ['GET'])]
     public function show(Finding $finding): Response
     {
