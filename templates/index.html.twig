@@ -13,7 +13,16 @@
             landmarks: landmarks|serialize(format = 'json')
         }) }} data-action="map:openModal->modal-form#openModal">
 
-            <div id="map"></div>
+            <div class="map-container">
+                <div id="splash-screen">
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                    <p>ChampiMap</p>
+                    <p>🍄</p>
+                </div>
+                <div id="map"></div>
+            </div>
 
         </div>
         <turbo-frame id="the_frame_id">

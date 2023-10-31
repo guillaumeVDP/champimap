@@ -26,6 +26,7 @@ export default class extends Controller {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
         this.map.on('click', this.onMapClick.bind(this));
+        this.map.whenReady(this.mapReady.bind(this));
         document.getElementById("map").style.width = window.innerWidth + "px";
         document.getElementById("map").style.height = window.innerHeight + "px";
 
@@ -101,6 +102,11 @@ export default class extends Controller {
         this.popup.setContent(container);
     }
 
+    mapReady() {
+        // document.getElementById("map").style.display = "block";
+        // document.getElementById("splash-screen").style.display = "none";
+    }
+
     showUserLocation(position) {
         const shadowUrl = 'images/marker-shadow.png';
         let iconUrl = 'images/marker-icon.png';
@@ -118,7 +124,7 @@ export default class extends Controller {
         this.userMarker = L.marker([position.coords.latitude, position.coords.longitude]);
         this.userMarker.setIcon(iconUser).addTo(this.map);
         this.map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 20);
-        
+
         navigator.geolocation.watchPosition(this.trackUser.bind(this), this.errorOnPosition.bind(this), {
             enableHighAccuracy: true,
             timeout: 3000,
