@@ -1,13 +1,10 @@
 .PHONY: start
 
 start:
-	symfony serve:start --port=8888
-
-db:
-	docker-compose up
+	docker compose up
 
 test:
-	vendor/bin/phpstan analyse src tests
+	docker compose exec php vendor/bin/phpstan analyse src tests
 
 watch:
-	yarn watch
+	docker compose exec php yarn watch

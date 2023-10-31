@@ -20,15 +20,17 @@ body {
 }
 
 #map {
-    display: none;
+    z-index: -1;
 }
 
 #splash-screen {
+    background: #bfd1ec;
     margin: 0;
     position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    /*top: 50%;*/
+    height: 100%;
+    /*-ms-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
     text-align: center;
     width: 100%;
     font-size: 3em;

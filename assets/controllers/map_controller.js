@@ -103,8 +103,8 @@ export default class extends Controller {
     }
 
     mapReady() {
-        // document.getElementById("map").style.display = "block";
-        // document.getElementById("splash-screen").style.display = "none";
+        document.getElementById("map").style.zIndex = "0";
+        document.getElementById("splash-screen").style.display = "none";
     }
 
     showUserLocation(position) {
