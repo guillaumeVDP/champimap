@@ -20,9 +20,9 @@ jobs:
       - name: updating repository
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main && exit"
       - name: stop docker
-        run: bash stop-docker.sh
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "bash stop-docker.sh && exit"
       - name: run docker
-        run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d && exit"
       - name: run migrations
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && make migrations && exit"
       - name: install assets
