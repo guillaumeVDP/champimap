@@ -18,13 +18,13 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: connect
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }}"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
       - name: updating repository
-        run: git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main
+        run: cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main
       - name: run migrations
-        run: make enter_php && php bin/console doctrine:migration:migrate && exit
+        run: cd ${{ secrets.WORK_DIR }} && make enter_php && php bin/console doctrine:migration:migrate && exit
       - name: install assets
-        run: make enter_php && yarn install && yarn build && exit
+        run: cd ${{ secrets.WORK_DIR }} && make enter_php && yarn install && yarn build && exit
       - name: exiting ssh
         run: exit
       - name: cleanup
