@@ -20,7 +20,7 @@ jobs:
       - name: connect
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
       - name: updating repository
-        run: cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main
+        run: cd /home/debian/champimap && git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main
       - name: run migrations
         run: cd ${{ secrets.WORK_DIR }} && make enter_php && php bin/console doctrine:migration:migrate && exit
       - name: install assets
