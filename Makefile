@@ -8,3 +8,12 @@ test:
 
 watch:
 	docker compose exec php yarn watch
+
+enter_web:
+	docker compose exec -it web bash
+
+enter_php:
+	docker compose exec -it php bash
+
+enter_db:
+	docker compose exec -it db bash
