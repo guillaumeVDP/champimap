@@ -24,3 +24,6 @@ migrations:
 assets:
 	docker compose exec php yarn install
 	docker compose exec php yarn build
+
+composer_install:
+	docker compose exec php composer install
