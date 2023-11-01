@@ -1,4 +1,4 @@
-.PHONY: start
+.PHONY: start migrations assets
 
 start:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up
@@ -17,3 +17,10 @@ enter_php:
 
 enter_db:
 	docker compose exec -it db bash
+
+migrations:
+	docker compose exec php php bin/console doctrine:migration:migrate --no-interaction
+
+assets:
+	docker compose exec php yarn install
+	docker compose exec php yarn build
