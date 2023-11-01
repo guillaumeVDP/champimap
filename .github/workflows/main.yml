@@ -20,12 +20,7 @@ jobs:
       - name: updating repository
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull --rebase origin main && exit"
       - name: stop docker
-        run: ids=$(docker ps -a -q)
-          for id in $ids
-          do
-          echo "$id"
-          docker stop $id && docker rm $id
-          done
+        run: bash stop-docker.sh
       - name: run docker
         run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
       - name: run migrations
