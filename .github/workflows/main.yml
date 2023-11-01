@@ -23,7 +23,7 @@ jobs:
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && make migrations && exit"
       - name: install assets
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && make assets && exit"
-      - name: exiting ssh
-        run: exit
+      - name: run docker
+        run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
       - name: cleanup
         run: rm -rf ~/.ssh
