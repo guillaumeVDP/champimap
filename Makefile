@@ -1,7 +1,7 @@
 .PHONY: start migrations assets
 
 start:
-	docker compose docker-compose.yml -f docker-compose.dev.yml up
+	docker compose up
 
 test:
 	docker compose exec php vendor/bin/phpstan analyse src tests
